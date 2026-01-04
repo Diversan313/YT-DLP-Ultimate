@@ -3,6 +3,7 @@
 A comprehensive and powerful tool for downloading videos and audio from YouTube and other supported platforms. Built on top of yt-dlp, this project provides an enhanced user experience with advanced and modern flexible configuration options.
 
 <img width="1919" height="1023" alt="image" src="https://github.com/user-attachments/assets/87b8b0c8-eab5-484d-a4d2-c8000a4d8ef4" />
+
 ## Overview
 
 YT-DLP-Ultimate is an advanced media downloader that leverages the power of yt-dlp to provide a seamless experience for downloading videos, audio tracks, and entire playlists (will be added in the future) from YouTube and numerous other video platforms.
