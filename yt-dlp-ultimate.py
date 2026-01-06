@@ -8,7 +8,10 @@ import logging
 import datetime
 import subprocess
 import time
+<<<<<<< HEAD
 import shutil
+=======
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
 
 # --- КОНФИГУРАЦИЯ ---
 LOCALE = {
@@ -38,11 +41,18 @@ LOCALE = {
         'btn_change': 'Изменить...',
         'btn_open': '📂 Открыть',
         'status_ready': 'В ожидании',
+<<<<<<< HEAD
         'status_work': 'Скачивание полного видео...',
         'status_paused': '⏸ Остановлено',
         'status_aborted': '⏹ Сброшено',
         'status_merge': 'Сборка MP4 (AAC)...',
         'status_cutting': '✂ Обрезка фрагмента...',
+=======
+        'status_work': 'Скачивание...',
+        'status_paused': '⏸ Остановлено',
+        'status_aborted': '⏹ Сброшено',
+        'status_merge': 'Сборка MP4 (AAC)...',
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
         'sett_logs': 'Вести лог-файл',
         'sett_noproxy': 'Отключить прокси (исправить ошибку подключения)',
         'sett_js_runtime': 'JavaScript Runtime (для YouTube):',
@@ -51,7 +61,11 @@ LOCALE = {
         'sett_lang': 'Язык (Требует перезапуска):',
         'sett_update': '🛠 Обновить ядро',
         'sett_cookies': '🍪 Браузер для Cookies (при ошибке 403):',
+<<<<<<< HEAD
         'version': 'Версия: 1.7 (Hard Cut)',
+=======
+        'version': 'Версия: 1.4 (Fragment Fix)',
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
         'err_url': 'Ошибка: Нет ссылки!',
         'err_time': 'Ошибка: Конец < Начала',
         'msg_done': 'Все задачи выполнены!',
@@ -107,11 +121,18 @@ LOCALE = {
         'btn_change': 'Change...',
         'btn_open': '📂 Open',
         'status_ready': 'Waiting',
+<<<<<<< HEAD
         'status_work': 'Downloading full video...',
         'status_paused': '⏸ Paused',
         'status_aborted': '⏹ Reset',
         'status_merge': 'Merging MP4 (AAC)...',
         'status_cutting': '✂ Cutting fragment...',
+=======
+        'status_work': 'Downloading...',
+        'status_paused': '⏸ Paused',
+        'status_aborted': '⏹ Reset',
+        'status_merge': 'Merging MP4 (AAC)...',
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
         'sett_logs': 'Enable Logs',
         'sett_noproxy': 'Disable Proxy (fix connection error)',
         'sett_js_runtime': 'JavaScript Runtime (for YouTube):',
@@ -120,7 +141,11 @@ LOCALE = {
         'sett_lang': 'Language (Restart required):',
         'sett_update': '🛠 Update Core',
         'sett_cookies': '🍪 Cookie Source (Fix 403):',
+<<<<<<< HEAD
         'version': 'Version: 1.7 (Hard Cut)',
+=======
+        'version': 'Version: 1.4 (Fragment Fix)',
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
         'err_url': 'Error: No URL!',
         'err_time': 'Error: End < Start',
         'msg_done': 'All Done!',
@@ -173,7 +198,11 @@ class ModernYouTubeCutter(ctk.CTk):
         self.video_settings = 'auto'
         self.setup_logging()
 
+<<<<<<< HEAD
         self.title("YT-DLP Ultimate v1.7")
+=======
+        self.title("YT-DLP Ultimate v1.4")
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
         self.geometry("950x800")
         self.minsize(600, 500)
         
@@ -819,6 +848,7 @@ class ModernYouTubeCutter(ctk.CTk):
             w['s'].configure(text="⏳ Получение информации...", text_color="yellow")
             w['err_btn'].pack_forget()
             
+<<<<<<< HEAD
             # Для фрагментов сразу ставим другой статус, так как будем качать полное
             if task['s'] is not None:
                 status_msg = self.t('status_work') # "Скачивание полного видео..."
@@ -837,13 +867,27 @@ class ModernYouTubeCutter(ctk.CTk):
                 'ffmpeg_location': self.ffmpeg_dir,
                 'quiet': True, 'no_warnings': True, 'noprogress': True,
                 'outtmpl': os.path.join(save_path, temp_filename_tpl),
+=======
+            self.lbl_status.configure(
+                text=f"📥 [{current_task_num}/{total_tasks}] Подготовка к скачиванию...",
+                text_color="#FF9800"
+            )
+
+            opts = {
+                'ffmpeg_location': self.ffmpeg_dir,
+                'quiet': True, 'no_warnings': True, 'noprogress': True,
+                'outtmpl': os.path.join(save_path, '%(title)s.%(ext)s'),
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                 'restrictfilenames': True,
                 'retries': 10, 'fragment_retries': 10,
                 'socket_timeout': 60,
                 'remote_components': ['ejs:github'],
+<<<<<<< HEAD
                 # Принудительно MP4, чтобы FFmpeg легче справлялся
                 'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
                 'merge_output_format': 'mp4', 
+=======
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
             }
             
             if self.disable_proxy:
@@ -856,24 +900,70 @@ class ModernYouTubeCutter(ctk.CTk):
             if cookie_browser != "Disabled":
                 opts['cookiesfrombrowser'] = (cookie_browser.lower(), )
 
+<<<<<<< HEAD
             # ВАЖНО: Если это фрагмент, мы НЕ используем download_sections.
             # Мы качаем всё видео целиком, чтобы потом гарантированно его обрезать.
             # Для полного видео (если task['s'] is None) настройки обычные.
+=======
+            if task['s'] is not None:
+                # ИСПОЛЬЗУЕМ БОЛЕЕ НАДЕЖНЫЙ МЕТОД ОБРЕЗКИ ЧЕРЕЗ СТРОКУ
+                # Это позволяет yt-dlp самому решить, как лучше скачать фрагмент
+                opts['download_sections'] = [f"*{task['s']}-{task['e']}"]
+                opts['force_keyframes_at_cuts'] = True # Более точная обрезка
+                opts['outtmpl'] = os.path.join(save_path, f'%(title)s_cut_{task["s"]}-{task["e"]}.%(ext)s')
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
 
             if task['is_audio']:
                 opts['format'] = 'bestaudio/best'
                 opts['postprocessors'] = [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3'}]
+<<<<<<< HEAD
             
             # ОТКЛЮЧАЕМ сложные пост-процессоры внутри YT-DLP для видео,
             # чтобы избежать конфликтов. Обрезку делаем сами.
+=======
+            else:
+                opts['format'] = task['fmt']
+                if task['conv']:
+                    opts['merge_output_format'] = 'mp4'
+                    
+                    bitrate = task.get('bitrate', 'auto')
+                    if bitrate == 'auto':
+                        video_settings = task.get('video_settings', 'auto')
+                        if video_settings == 'fast':
+                            audio_bitrate = '128k'
+                        elif video_settings == 'quality':
+                            audio_bitrate = '192k'
+                        else:
+                            audio_bitrate = '128k'
+                    else:
+                        audio_bitrate = f'{bitrate}k'
+                    
+                    video_settings = task.get('video_settings', 'auto')
+                    ffmpeg_args = [
+                        '-c:v', 'copy',
+                        '-c:a', 'aac',
+                        '-b:a', audio_bitrate,
+                        '-movflags', '+faststart',
+                        '-threads', '0',
+                        '-y'
+                    ]
+                    
+                    if video_settings == 'quality':
+                        ffmpeg_args.extend(['-q:a', '2'])
+                    
+                    opts['postprocessor_args'] = {'ffmpeg': ffmpeg_args}
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
 
             download_start_time = time.time()
             last_progress_time = time.time()
             max_idle_time = 300
             
+<<<<<<< HEAD
             # Для отслеживания реального имени файла на диске
             downloaded_file_path = [None] 
 
+=======
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
             def hook(d):
                 nonlocal last_progress_time
                 if self.abort_flag: raise Exception("ABORTED_BY_USER")
@@ -884,6 +974,7 @@ class ModernYouTubeCutter(ctk.CTk):
                 
                 if d['status'] == 'downloading':
                     last_progress_time = current_time
+<<<<<<< HEAD
                     if 'filename' in d:
                          downloaded_file_path[0] = d['filename']
 
@@ -895,6 +986,19 @@ class ModernYouTubeCutter(ctk.CTk):
                             speed = d.get('_speed_str', 'N/A')
                             
                             if total:
+=======
+                    now = time.time()
+                    if now - self.last_ui_update > 0.1: 
+                        try:
+                            # УЛУЧШЕННАЯ ЛОГИКА ПРОГРЕССА ДЛЯ ФРАГМЕНТОВ
+                            downloaded = d.get('downloaded_bytes', 0)
+                            total = d.get('total_bytes') or d.get('total_bytes_estimate')
+                            
+                            speed = d.get('_speed_str', 'N/A')
+                            
+                            if total:
+                                # Если общий размер известен
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                                 percent_val = downloaded / total
                                 w['p'].set(percent_val)
                                 percent_str = f"{percent_val*100:.1f}%"
@@ -902,15 +1006,32 @@ class ModernYouTubeCutter(ctk.CTk):
                                 total_mb = total / (1024 * 1024)
                                 size_info = f"{downloaded_mb:.1f}MB / {total_mb:.1f}MB"
                             else:
+<<<<<<< HEAD
                                 import math
                                 pulse = (math.sin(now * 3) + 1) / 2 
                                 w['p'].set(0.1 + pulse * 0.1) 
+=======
+                                # Если общий размер НЕИЗВЕСТЕН (часто бывает при фрагментах)
+                                # Просто анимируем прогресс и показываем сколько скачано
+                                import math
+                                # Делаем "пульсирующий" прогресс бар
+                                pulse = (math.sin(now * 3) + 1) / 2 
+                                w['p'].set(0.1 + pulse * 0.1) # От 10% до 20%
+                                
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                                 percent_str = "..."
                                 downloaded_mb = downloaded / (1024 * 1024)
                                 size_info = f"{downloaded_mb:.1f}MB"
                             
                             status_text = f"⬇ Скачивание: {percent_str} | {speed} | {size_info}"
                             w['s'].configure(text=status_text, text_color="yellow")
+<<<<<<< HEAD
+=======
+                            
+                            task_title = w['t'].cget('text')
+                            if len(task_title) > 30:
+                                task_title = task_title[:27] + "..."
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                             self.lbl_status.configure(
                                 text=f"📥 [{current_task_num}/{total_tasks}] {percent_str} | {speed}",
                                 text_color="#4CAF50"
@@ -918,15 +1039,28 @@ class ModernYouTubeCutter(ctk.CTk):
                             self.last_ui_update = now
                         except: pass
                 elif d['status'] == 'finished':
+<<<<<<< HEAD
                      if 'filename' in d:
                          downloaded_file_path[0] = d['filename']
                      w['p'].set(0.95)
                      w['s'].configure(text=self.t('status_merge'), text_color="cyan")
                      last_progress_time = current_time
+=======
+                     w['p'].set(0.95)
+                     w['s'].configure(text="🔄 Обработка и сборка MP4...", text_color="cyan")
+                     self.lbl_status.configure(
+                         text=f"🔄 [{current_task_num}/{total_tasks}] Обработка MP4 (это может занять время)...",
+                         text_color="#2196F3"
+                     )
+                     last_progress_time = current_time
+                elif d['status'] == 'error':
+                     w['s'].configure(text="❌ Ошибка при скачивании", text_color="red")
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
 
             opts['progress_hooks'] = [hook]
 
             try:
+<<<<<<< HEAD
                 # 1. СКАЧИВАНИЕ ПОЛНОГО ВИДЕО
                 with yt_dlp.YoutubeDL(opts) as ydl:
                     info = ydl.extract_info(task['url'], download=False)
@@ -1009,6 +1143,10 @@ class ModernYouTubeCutter(ctk.CTk):
                     if os.path.exists(final_name): os.remove(final_name)
                     os.rename(final_file, final_name)
 
+=======
+                with yt_dlp.YoutubeDL(opts) as ydl:
+                    ydl.download([task['url']])
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                 task['done'] = True
                 w['s'].configure(text="✔ Готово!", text_color="green")
                 w['p'].set(1)
@@ -1031,6 +1169,11 @@ class ModernYouTubeCutter(ctk.CTk):
                     err_msg = str(e)
                     if "cookie" in err_msg.lower() or "locked" in err_msg.lower():
                         err_msg += "\n\n💡 ПОДСКАЗКА: Закройте браузер перед скачиванием!"
+<<<<<<< HEAD
+=======
+                    if "challenge" in err_msg.lower() or "js" in err_msg.lower():
+                        err_msg += "\n\n💡 ПОДСКАЗКА: Убедитесь, что deno.exe доступен и компоненты загружены!"
+>>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                     
                     task['error'] = err_msg
                     w['s'].configure(text="❌ Error", text_color="red")
