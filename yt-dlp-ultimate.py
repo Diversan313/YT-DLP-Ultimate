@@ -8,180 +8,93 @@ import logging
 import datetime
 import subprocess
 import time
-<<<<<<< HEAD
 import shutil
-=======
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
+import json
 
 # --- КОНФИГУРАЦИЯ ---
-LOCALE = {
-    'ru': {
-        'tab_full': 'Полное видео',
-        'tab_frag': 'Фрагменты',
-        'tab_queue': 'Загрузки',
-        'tab_sett': '⚙ Настройки',
-        'lbl_url': 'Ссылка на видео:',
-        'lbl_quality': 'Качество / Формат:',
-        'lbl_bitrate': 'Битрейт аудио:',
-        'lbl_video_settings': 'Настройки видео:',
-        'bitrate_auto': 'Авто (рекомендуется)',
-        'bitrate_320': '320 kbps (высокое)',
-        'bitrate_192': '192 kbps (среднее)',
-        'bitrate_128': '128 kbps (быстрое)',
-        'video_settings_auto': 'Авто (рекомендуется)',
-        'video_settings_fast': 'Быстрая обработка',
-        'video_settings_quality': 'Качественная обработка',
-        'chk_convert': 'Конвертировать в MP4 (Fix звука)',
-        'btn_add_full': 'ДОБАВИТЬ В ОЧЕРЕДЬ (ПОЛНОЕ)',
-        'btn_add_frag': 'ДОБАВИТЬ ФРАГМЕНТ',
-        'btn_start': '▶ ЗАПУСТИТЬ',
-        'btn_stop': '⏸ ПАУЗА / СТОП',
-        'btn_clear': '🗑 ЖЕСТКИЙ СБРОС И ОЧИСТКА',
-        'lbl_path': 'Папка сохранения:',
-        'btn_change': 'Изменить...',
-        'btn_open': '📂 Открыть',
-        'status_ready': 'В ожидании',
-<<<<<<< HEAD
-        'status_work': 'Скачивание полного видео...',
-        'status_paused': '⏸ Остановлено',
-        'status_aborted': '⏹ Сброшено',
-        'status_merge': 'Сборка MP4 (AAC)...',
-        'status_cutting': '✂ Обрезка фрагмента...',
-=======
-        'status_work': 'Скачивание...',
-        'status_paused': '⏸ Остановлено',
-        'status_aborted': '⏹ Сброшено',
-        'status_merge': 'Сборка MP4 (AAC)...',
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
-        'sett_logs': 'Вести лог-файл',
-        'sett_noproxy': 'Отключить прокси (исправить ошибку подключения)',
-        'sett_js_runtime': 'JavaScript Runtime (для YouTube):',
-        'sett_js_auto': 'Авто (определить автоматически)',
-        'sett_js_not_found': '⚠️ JavaScript runtime не найден. Установите deno или nodejs',
-        'sett_lang': 'Язык (Требует перезапуска):',
-        'sett_update': '🛠 Обновить ядро',
-        'sett_cookies': '🍪 Браузер для Cookies (при ошибке 403):',
-<<<<<<< HEAD
-        'version': 'Версия: 1.7 (Hard Cut)',
-=======
-        'version': 'Версия: 1.4 (Fragment Fix)',
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
-        'err_url': 'Ошибка: Нет ссылки!',
-        'err_time': 'Ошибка: Конец < Начала',
-        'msg_done': 'Все задачи выполнены!',
-        'msg_upd_start': 'Обновление запущено... Ждите.',
-        'msg_upd_ok': 'Готово! Перезапустите программу.',
-        'q_best': 'Лучшее (Авто)',
-        'q_1080': '1080p (Full HD)',
-        'q_720': '720p (HD)',
-        'q_audio': 'Только звук (MP3)',
-        'btn_exit': '🚪 Выход',
-        'btn_restart': '🔄 Перезапуск',
-        'btn_diagnostics': '🔍 Диагностика',
-        'msg_exit_confirm': 'Идет скачивание. Вы уверены, что хотите выйти?',
-        'msg_restart_confirm': 'Идет скачивание. Вы уверены, что хотите перезапустить?',
-        'diag_title': 'Диагностика системы',
-        'diag_ffmpeg': 'FFmpeg:',
-        'diag_ffprobe': 'FFprobe:',
-        'diag_deno': 'Deno (JavaScript Runtime):',
-        'diag_ytdlp': 'yt-dlp:',
-        'diag_path': 'Путь программы:',
-        'diag_downloads': 'Папка загрузок:',
-        'diag_env_path': 'PATH окружения:',
-        'diag_found': '✅ Найден',
-        'diag_not_found': '❌ Не найден',
-        'diag_working': '✅ Работает',
-        'diag_not_working': '❌ Не работает',
-        'diag_version': 'Версия:',
-        'diag_close': 'Закрыть'
-    },
-    'en': {
-        'tab_full': 'Full Video',
-        'tab_frag': 'Fragments',
-        'tab_queue': 'Downloads',
-        'tab_sett': '⚙ Settings',
-        'lbl_url': 'Video URL:',
-        'lbl_quality': 'Quality:',
-        'lbl_bitrate': 'Audio Bitrate:',
-        'lbl_video_settings': 'Video Settings:',
-        'bitrate_auto': 'Auto (recommended)',
-        'bitrate_320': '320 kbps (high)',
-        'bitrate_192': '192 kbps (medium)',
-        'bitrate_128': '128 kbps (fast)',
-        'video_settings_auto': 'Auto (recommended)',
-        'video_settings_fast': 'Fast processing',
-        'video_settings_quality': 'Quality processing',
-        'chk_convert': 'Convert to MP4 (Audio Fix)',
-        'btn_add_full': 'ADD FULL VIDEO',
-        'btn_add_frag': 'ADD FRAGMENT',
-        'btn_start': '▶ START',
-        'btn_stop': '⏸ PAUSE / STOP',
-        'btn_clear': '🗑 HARD RESET & CLEAR',
-        'lbl_path': 'Save Path:',
-        'btn_change': 'Change...',
-        'btn_open': '📂 Open',
-        'status_ready': 'Waiting',
-<<<<<<< HEAD
-        'status_work': 'Downloading full video...',
-        'status_paused': '⏸ Paused',
-        'status_aborted': '⏹ Reset',
-        'status_merge': 'Merging MP4 (AAC)...',
-        'status_cutting': '✂ Cutting fragment...',
-=======
-        'status_work': 'Downloading...',
-        'status_paused': '⏸ Paused',
-        'status_aborted': '⏹ Reset',
-        'status_merge': 'Merging MP4 (AAC)...',
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
-        'sett_logs': 'Enable Logs',
-        'sett_noproxy': 'Disable Proxy (fix connection error)',
-        'sett_js_runtime': 'JavaScript Runtime (for YouTube):',
-        'sett_js_auto': 'Auto (detect automatically)',
-        'sett_js_not_found': '⚠️ JavaScript runtime not found. Install deno or nodejs',
-        'sett_lang': 'Language (Restart required):',
-        'sett_update': '🛠 Update Core',
-        'sett_cookies': '🍪 Cookie Source (Fix 403):',
-<<<<<<< HEAD
-        'version': 'Version: 1.7 (Hard Cut)',
-=======
-        'version': 'Version: 1.4 (Fragment Fix)',
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
-        'err_url': 'Error: No URL!',
-        'err_time': 'Error: End < Start',
-        'msg_done': 'All Done!',
-        'msg_upd_start': 'Update started... Please wait.',
-        'msg_upd_ok': 'Done! Please restart app.',
-        'q_best': 'Best (Auto)',
-        'q_1080': '1080p (Full HD)',
-        'q_720': '720p (HD)',
-        'q_audio': 'Audio Only (MP3)',
-        'btn_exit': '🚪 Exit',
-        'btn_restart': '🔄 Restart',
-        'btn_diagnostics': '🔍 Diagnostics',
-        'msg_exit_confirm': 'Download in progress. Are you sure you want to exit?',
-        'msg_restart_confirm': 'Download in progress. Are you sure you want to restart?',
-        'diag_title': 'System Diagnostics',
-        'diag_ffmpeg': 'FFmpeg:',
-        'diag_ffprobe': 'FFprobe:',
-        'diag_deno': 'Deno (JavaScript Runtime):',
-        'diag_ytdlp': 'yt-dlp:',
-        'diag_path': 'Program Path:',
-        'diag_downloads': 'Downloads Folder:',
-        'diag_env_path': 'Environment PATH:',
-        'diag_found': '✅ Found',
-        'diag_not_found': '❌ Not Found',
-        'diag_working': '✅ Working',
-        'diag_not_working': '❌ Not Working',
-        'diag_version': 'Version:',
-        'diag_close': 'Close'
+def load_locale(base_path):
+    """Загружает локализацию из JSON файлов в папке languages"""
+    locale = {}
+    languages_dir = os.path.join(base_path, 'languages')
+    
+    for lang_code in ['ru', 'en']:
+        lang_file = os.path.join(languages_dir, lang_code, f'{lang_code}.json')
+        try:
+            if os.path.exists(lang_file):
+                with open(lang_file, 'r', encoding='utf-8') as f:
+                    locale[lang_code] = json.load(f)
+            else:
+                # Fallback на пустой словарь если файл не найден
+                locale[lang_code] = {}
+        except Exception as e:
+            logging.error(f"Error loading locale {lang_code}: {e}")
+            locale[lang_code] = {}
+    
+    return locale
+
+def load_settings(base_path):
+    """Загружает настройки из settings.json"""
+    settings_file = os.path.join(base_path, 'settings.json')
+    default_settings = {
+        'language': 'en',
+        'logging_enabled': True,
+        'disable_proxy': False,
+        'js_runtime': 'auto',
+        'cookies_browser': 'Disabled',
+        'download_path': None
     }
-}
+    
+    try:
+        if os.path.exists(settings_file):
+            with open(settings_file, 'r', encoding='utf-8') as f:
+                loaded_settings = json.load(f)
+                # Объединяем с дефолтными настройками на случай если какие-то ключи отсутствуют
+                default_settings.update(loaded_settings)
+        return default_settings
+    except Exception as e:
+        logging.error(f"Error loading settings: {e}")
+        return default_settings
+
+def save_settings(base_path, settings):
+    """Сохраняет настройки в settings.json"""
+    settings_file = os.path.join(base_path, 'settings.json')
+    try:
+        with open(settings_file, 'w', encoding='utf-8') as f:
+            json.dump(settings, f, indent=4, ensure_ascii=False)
+    except Exception as e:
+        logging.error(f"Error saving settings: {e}")
 
 QUALITY_MAP = {
     'q_best': 'bestvideo+bestaudio/best', 
-    'q_1080': 'bestvideo[height=1080]+bestaudio/best[height=1080]',
-    'q_720': 'bestvideo[height=720]+bestaudio/best[height=720]',
+    # Для 1080p: строго ищем разрешение 1080, с множественными fallback вариантами
+    'q_1080': 'bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height=1080]+bestaudio/best[height=1080]/bestvideo[height<=1080][height>=1070][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=1080][height>=1000]+bestaudio/best[height<=1080][height>=1000]/bestvideo[height<=1080]+bestaudio/best[height<=1080]/best',
+    # Для 720p: строго ищем разрешение 720, с множественными fallback вариантами
+    'q_720': 'bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height=720]+bestaudio/best[height=720]/bestvideo[height<=720][height>=710][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720][height>=600]+bestaudio/best[height<=720][height>=600]/bestvideo[height<=720]+bestaudio/best[height<=720]/best',
     'q_audio': 'audio'
+}
+
+# Альтернативные форматы для fallback при ошибке "format is not available"
+FALLBACK_FORMATS = {
+    'q_1080': [
+        'bestvideo[height<=1080][height>=1000]+bestaudio/best[height<=1080][height>=1000]',
+        'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
+        'bestvideo+bestaudio/best',
+        'best'
+    ],
+    'q_720': [
+        'bestvideo[height<=720][height>=600]+bestaudio/best[height<=720][height>=600]',
+        'bestvideo[height<=720]+bestaudio/best[height<=720]',
+        'bestvideo+bestaudio/best',
+        'best'
+    ],
+    'q_best': [
+        'bestvideo+bestaudio/best',
+        'best'
+    ],
+    'q_audio': [
+        'bestaudio/best',
+        'audio'
+    ]
 }
 
 ctk.set_appearance_mode("Dark")
@@ -190,26 +103,36 @@ ctk.set_default_color_theme("blue")
 class ModernYouTubeCutter(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.lang = 'ru'
-        self.logging_enabled = True
-        self.disable_proxy = False 
-        self.js_runtime = 'auto' 
+        self.base_path = self.get_base_path()
+        
+        # Загружаем настройки из settings.json
+        settings = load_settings(self.base_path)
+        self.lang = settings.get('language', 'en')
+        self.logging_enabled = settings.get('logging_enabled', True)
+        self.disable_proxy = settings.get('disable_proxy', False)
+        self.js_runtime = settings.get('js_runtime', 'auto')
         self.audio_bitrate = 'auto' 
         self.video_settings = 'auto'
         self.setup_logging()
 
-<<<<<<< HEAD
+        # Загружаем локализацию из JSON файлов
+        self.LOCALE = load_locale(self.base_path)
+        
+        # Устанавливаем иконку
+        icon_path = os.path.join(self.base_path, 'icon.ico')
+        if os.path.exists(icon_path):
+            try:
+                self.iconbitmap(icon_path)
+            except Exception as e:
+                logging.warning(f"Could not set icon: {e}")
+
         self.title("YT-DLP Ultimate v1.7")
-=======
-        self.title("YT-DLP Ultimate v1.4")
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
         self.geometry("950x800")
         self.minsize(600, 500)
         
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        self.base_path = self.get_base_path()
         self.ffmpeg_dir = self.base_path 
         self.ffmpeg_exe = os.path.join(self.base_path, 'ffmpeg.exe')
         self.ffprobe_exe = os.path.join(self.base_path, 'ffprobe.exe')
@@ -219,8 +142,13 @@ class ModernYouTubeCutter(ctk.CTk):
         if self.base_path not in env_path:
             os.environ['PATH'] = self.base_path + os.pathsep + env_path
 
+        # Загружаем путь загрузок из настроек или используем дефолтный
         default_dl = os.path.join(self.base_path, 'downloads')
-        if not os.path.exists(default_dl): os.makedirs(default_dl)
+        download_path = settings.get('download_path')
+        if download_path and os.path.exists(download_path):
+            default_dl = download_path
+        elif not os.path.exists(default_dl):
+            os.makedirs(default_dl)
         self.download_path_var = ctk.StringVar(value=default_dl)
 
         self.download_queue = [] 
@@ -229,9 +157,24 @@ class ModernYouTubeCutter(ctk.CTk):
         self.abort_flag = False 
         self.is_running = False
         self.js_runtime_paths = {}
+        
+        # Сохраняем загруженные настройки для использования в UI
+        self.loaded_settings = settings
 
         self.create_ui()
         self.check_tools()
+    
+    def save_settings_to_file(self):
+        """Сохраняет текущие настройки в settings.json"""
+        settings = {
+            'language': self.lang,
+            'logging_enabled': self.logging_enabled,
+            'disable_proxy': self.disable_proxy,
+            'js_runtime': self.js_runtime,
+            'cookies_browser': self.cookies_val.get() if hasattr(self, 'cookies_val') else 'Disabled',
+            'download_path': self.download_path_var.get()
+        }
+        save_settings(self.base_path, settings)
 
     def setup_logging(self):
         for h in logging.root.handlers[:]: logging.root.removeHandler(h)
@@ -242,9 +185,56 @@ class ModernYouTubeCutter(ctk.CTk):
     def get_base_path(self):
         if getattr(sys, 'frozen', False): return os.path.dirname(sys.executable)
         return os.path.dirname(os.path.abspath(__file__))
+    
+    def get_unique_filename(self, base_path, base_name, extension):
+        """Генерирует уникальное имя файла, добавляя суффикс если файл уже существует"""
+        full_path = os.path.join(base_path, f"{base_name}{extension}")
+        
+        if not os.path.exists(full_path):
+            return full_path
+        
+        # Если файл существует, добавляем суффикс _1, _2, и т.д.
+        counter = 1
+        while True:
+            new_name = f"{base_name}_{counter}{extension}"
+            new_path = os.path.join(base_path, new_name)
+            if not os.path.exists(new_path):
+                return new_path
+            counter += 1
+            if counter > 1000:  # Защита от бесконечного цикла
+                # Если достигли 1000, добавляем timestamp
+                timestamp = int(time.time())
+                new_name = f"{base_name}_{timestamp}{extension}"
+                return os.path.join(base_path, new_name)
+    
+    def get_quality_suffix(self, q_lbl, is_audio):
+        """Извлекает суффикс качества из метки для добавления в имя файла"""
+        if is_audio:
+            return "_audio"
+        
+        if not q_lbl:
+            return ""
+        
+        # Извлекаем разрешение из метки качества (проверяем сначала более специфичные случаи)
+        q_lbl_lower = q_lbl.lower()
+        
+        # Проверяем на 1080p (более специфично, чем просто "hd")
+        if '1080' in q_lbl_lower or 'full hd' in q_lbl_lower or 'fullhd' in q_lbl_lower:
+            return "_1080p"
+        # Проверяем на 720p
+        elif '720' in q_lbl_lower:
+            return "_720p"
+        # Проверяем на "best" или "auto" (лучшее качество)
+        elif 'best' in q_lbl_lower or 'auto' in q_lbl_lower or 'лучшее' in q_lbl_lower or 'лучшее' in q_lbl_lower:
+            return "_best"
+        # Общий случай HD (если не 1080 и не 720)
+        elif 'hd' in q_lbl_lower:
+            return "_hd"
+        else:
+            return ""
 
     def t(self, key):
-        return LOCALE[self.lang].get(key, key)
+        return self.LOCALE.get(self.lang, {}).get(key, key)
 
     def force_paste(self, event):
         try:
@@ -378,18 +368,18 @@ class ModernYouTubeCutter(ctk.CTk):
         ctk.CTkButton(t, text=self.t('sett_update'), fg_color="#E07A5F", hover_color="#D16040", command=self.update_ytdlp).pack(pady=20)
         
         ctk.CTkLabel(t, text=self.t('sett_cookies')).pack(pady=(10, 5))
-        self.cookies_val = ctk.StringVar(value="Disabled")
+        cookies_browser = self.loaded_settings.get('cookies_browser', 'Disabled')
+        self.cookies_val = ctk.StringVar(value=cookies_browser)
         browsers = ["Disabled", "Chrome", "Edge", "Firefox", "Opera", "Yandex"]
-        self.combo_cookies = ctk.CTkOptionMenu(t, values=browsers, variable=self.cookies_val)
+        self.combo_cookies = ctk.CTkOptionMenu(t, values=browsers, variable=self.cookies_val, command=self.update_cookies_setting)
         self.combo_cookies.pack(pady=5)
         
-        self.chk_logs = ctk.CTkCheckBox(t, text=self.t('sett_logs'))
+        self.chk_logs = ctk.CTkCheckBox(t, text=self.t('sett_logs'), command=self.update_logging_setting)
         if self.logging_enabled: self.chk_logs.select()
         self.chk_logs.pack(pady=10)
         
-        self.chk_noproxy = ctk.CTkCheckBox(t, text=self.t('sett_noproxy'))
+        self.chk_noproxy = ctk.CTkCheckBox(t, text=self.t('sett_noproxy'), command=self.update_proxy_setting)
         if self.disable_proxy: self.chk_noproxy.select()
-        self.chk_noproxy.configure(command=self.update_proxy_setting)
         self.chk_noproxy.pack(pady=10)
         
         ctk.CTkLabel(t, text=self.t('sett_js_runtime')).pack(pady=(10, 5))
@@ -447,14 +437,33 @@ class ModernYouTubeCutter(ctk.CTk):
             self.lbl_status.configure(text=self.t('status_ready'))
         threading.Thread(target=run_upd, daemon=True).start()
 
-    def change_lang_req(self, v): messagebox.showinfo("Info", "Restart app to apply language.")
+    def change_lang_req(self, v):
+        # Обновляем язык в зависимости от выбора
+        if v == "Русский":
+            self.lang = 'ru'
+        else:
+            self.lang = 'en'
+        self.save_settings_to_file()
+        messagebox.showinfo("Info", "Restart app to apply language.")
+    
     def update_proxy_setting(self):
         self.disable_proxy = self.chk_noproxy.get()
+        self.save_settings_to_file()
+    
+    def update_logging_setting(self):
+        self.logging_enabled = self.chk_logs.get()
+        self.setup_logging()
+        self.save_settings_to_file()
+    
+    def update_cookies_setting(self, value):
+        self.save_settings_to_file()
+    
     def update_js_runtime(self, value):
         if value == self.t('sett_js_auto'):
             self.js_runtime = 'auto'
         else:
             self.js_runtime = value
+        self.save_settings_to_file()
     def get_q_string(self, display_val):
         try:
             keys = ['q_best', 'q_1080', 'q_720', 'q_audio']
@@ -537,7 +546,7 @@ class ModernYouTubeCutter(ctk.CTk):
         self.download_queue.append({
             'id': tid, 'url': url, 's': s, 'e': e, 'fmt': fmt, 'is_audio': is_audio, 
             'conv': do_convert, 'bitrate': bitrate, 'video_settings': video_settings,
-            'done': False, 'error': None
+            'q_lbl': q_lbl, 'done': False, 'error': None
         })
         threading.Thread(target=self.fetch_title, args=(tid, url)).start()
 
@@ -608,7 +617,9 @@ class ModernYouTubeCutter(ctk.CTk):
 
     def change_path(self):
         d = filedialog.askdirectory()
-        if d: self.download_path_var.set(d)
+        if d:
+            self.download_path_var.set(d)
+            self.save_settings_to_file()
     def open_path(self):
         p = self.download_path_var.get()
         if os.path.exists(p): os.startfile(p)
@@ -848,7 +859,6 @@ class ModernYouTubeCutter(ctk.CTk):
             w['s'].configure(text="⏳ Получение информации...", text_color="yellow")
             w['err_btn'].pack_forget()
             
-<<<<<<< HEAD
             # Для фрагментов сразу ставим другой статус, так как будем качать полное
             if task['s'] is not None:
                 status_msg = self.t('status_work') # "Скачивание полного видео..."
@@ -867,27 +877,11 @@ class ModernYouTubeCutter(ctk.CTk):
                 'ffmpeg_location': self.ffmpeg_dir,
                 'quiet': True, 'no_warnings': True, 'noprogress': True,
                 'outtmpl': os.path.join(save_path, temp_filename_tpl),
-=======
-            self.lbl_status.configure(
-                text=f"📥 [{current_task_num}/{total_tasks}] Подготовка к скачиванию...",
-                text_color="#FF9800"
-            )
-
-            opts = {
-                'ffmpeg_location': self.ffmpeg_dir,
-                'quiet': True, 'no_warnings': True, 'noprogress': True,
-                'outtmpl': os.path.join(save_path, '%(title)s.%(ext)s'),
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                 'restrictfilenames': True,
                 'retries': 10, 'fragment_retries': 10,
                 'socket_timeout': 60,
                 'remote_components': ['ejs:github'],
-<<<<<<< HEAD
-                # Принудительно MP4, чтобы FFmpeg легче справлялся
-                'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
                 'merge_output_format': 'mp4', 
-=======
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
             }
             
             if self.disable_proxy:
@@ -900,70 +894,37 @@ class ModernYouTubeCutter(ctk.CTk):
             if cookie_browser != "Disabled":
                 opts['cookiesfrombrowser'] = (cookie_browser.lower(), )
 
-<<<<<<< HEAD
             # ВАЖНО: Если это фрагмент, мы НЕ используем download_sections.
             # Мы качаем всё видео целиком, чтобы потом гарантированно его обрезать.
             # Для полного видео (если task['s'] is None) настройки обычные.
-=======
-            if task['s'] is not None:
-                # ИСПОЛЬЗУЕМ БОЛЕЕ НАДЕЖНЫЙ МЕТОД ОБРЕЗКИ ЧЕРЕЗ СТРОКУ
-                # Это позволяет yt-dlp самому решить, как лучше скачать фрагмент
-                opts['download_sections'] = [f"*{task['s']}-{task['e']}"]
-                opts['force_keyframes_at_cuts'] = True # Более точная обрезка
-                opts['outtmpl'] = os.path.join(save_path, f'%(title)s_cut_{task["s"]}-{task["e"]}.%(ext)s')
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
 
+            # Определяем формат для скачивания
+            original_format = None
             if task['is_audio']:
-                opts['format'] = 'bestaudio/best'
+                original_format = 'bestaudio/best'
+                opts['format'] = original_format
                 opts['postprocessors'] = [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3'}]
-<<<<<<< HEAD
+            else:
+                # Используем формат из задачи для правильного разрешения
+                # Если формат не задан, используем дефолтный
+                if task.get('fmt'):
+                    original_format = task['fmt']
+                    opts['format'] = original_format
+                else:
+                    # Дефолтный формат
+                    original_format = 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
+                    opts['format'] = original_format
             
             # ОТКЛЮЧАЕМ сложные пост-процессоры внутри YT-DLP для видео,
             # чтобы избежать конфликтов. Обрезку делаем сами.
-=======
-            else:
-                opts['format'] = task['fmt']
-                if task['conv']:
-                    opts['merge_output_format'] = 'mp4'
-                    
-                    bitrate = task.get('bitrate', 'auto')
-                    if bitrate == 'auto':
-                        video_settings = task.get('video_settings', 'auto')
-                        if video_settings == 'fast':
-                            audio_bitrate = '128k'
-                        elif video_settings == 'quality':
-                            audio_bitrate = '192k'
-                        else:
-                            audio_bitrate = '128k'
-                    else:
-                        audio_bitrate = f'{bitrate}k'
-                    
-                    video_settings = task.get('video_settings', 'auto')
-                    ffmpeg_args = [
-                        '-c:v', 'copy',
-                        '-c:a', 'aac',
-                        '-b:a', audio_bitrate,
-                        '-movflags', '+faststart',
-                        '-threads', '0',
-                        '-y'
-                    ]
-                    
-                    if video_settings == 'quality':
-                        ffmpeg_args.extend(['-q:a', '2'])
-                    
-                    opts['postprocessor_args'] = {'ffmpeg': ffmpeg_args}
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
 
             download_start_time = time.time()
             last_progress_time = time.time()
             max_idle_time = 300
             
-<<<<<<< HEAD
             # Для отслеживания реального имени файла на диске
             downloaded_file_path = [None] 
 
-=======
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
             def hook(d):
                 nonlocal last_progress_time
                 if self.abort_flag: raise Exception("ABORTED_BY_USER")
@@ -974,7 +935,6 @@ class ModernYouTubeCutter(ctk.CTk):
                 
                 if d['status'] == 'downloading':
                     last_progress_time = current_time
-<<<<<<< HEAD
                     if 'filename' in d:
                          downloaded_file_path[0] = d['filename']
 
@@ -986,19 +946,6 @@ class ModernYouTubeCutter(ctk.CTk):
                             speed = d.get('_speed_str', 'N/A')
                             
                             if total:
-=======
-                    now = time.time()
-                    if now - self.last_ui_update > 0.1: 
-                        try:
-                            # УЛУЧШЕННАЯ ЛОГИКА ПРОГРЕССА ДЛЯ ФРАГМЕНТОВ
-                            downloaded = d.get('downloaded_bytes', 0)
-                            total = d.get('total_bytes') or d.get('total_bytes_estimate')
-                            
-                            speed = d.get('_speed_str', 'N/A')
-                            
-                            if total:
-                                # Если общий размер известен
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                                 percent_val = downloaded / total
                                 w['p'].set(percent_val)
                                 percent_str = f"{percent_val*100:.1f}%"
@@ -1006,32 +953,15 @@ class ModernYouTubeCutter(ctk.CTk):
                                 total_mb = total / (1024 * 1024)
                                 size_info = f"{downloaded_mb:.1f}MB / {total_mb:.1f}MB"
                             else:
-<<<<<<< HEAD
                                 import math
                                 pulse = (math.sin(now * 3) + 1) / 2 
                                 w['p'].set(0.1 + pulse * 0.1) 
-=======
-                                # Если общий размер НЕИЗВЕСТЕН (часто бывает при фрагментах)
-                                # Просто анимируем прогресс и показываем сколько скачано
-                                import math
-                                # Делаем "пульсирующий" прогресс бар
-                                pulse = (math.sin(now * 3) + 1) / 2 
-                                w['p'].set(0.1 + pulse * 0.1) # От 10% до 20%
-                                
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                                 percent_str = "..."
                                 downloaded_mb = downloaded / (1024 * 1024)
                                 size_info = f"{downloaded_mb:.1f}MB"
                             
                             status_text = f"⬇ Скачивание: {percent_str} | {speed} | {size_info}"
                             w['s'].configure(text=status_text, text_color="yellow")
-<<<<<<< HEAD
-=======
-                            
-                            task_title = w['t'].cget('text')
-                            if len(task_title) > 30:
-                                task_title = task_title[:27] + "..."
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                             self.lbl_status.configure(
                                 text=f"📥 [{current_task_num}/{total_tasks}] {percent_str} | {speed}",
                                 text_color="#4CAF50"
@@ -1039,34 +969,92 @@ class ModernYouTubeCutter(ctk.CTk):
                             self.last_ui_update = now
                         except: pass
                 elif d['status'] == 'finished':
-<<<<<<< HEAD
                      if 'filename' in d:
                          downloaded_file_path[0] = d['filename']
                      w['p'].set(0.95)
-                     w['s'].configure(text=self.t('status_merge'), text_color="cyan")
+                     # Показываем правильное сообщение в зависимости от типа файла
+                     if task['is_audio']:
+                         w['s'].configure(text=self.t('status_merge_mp3'), text_color="cyan")
+                     else:
+                         w['s'].configure(text=self.t('status_merge_mp4'), text_color="cyan")
                      last_progress_time = current_time
-=======
-                     w['p'].set(0.95)
-                     w['s'].configure(text="🔄 Обработка и сборка MP4...", text_color="cyan")
-                     self.lbl_status.configure(
-                         text=f"🔄 [{current_task_num}/{total_tasks}] Обработка MP4 (это может занять время)...",
-                         text_color="#2196F3"
-                     )
-                     last_progress_time = current_time
-                elif d['status'] == 'error':
-                     w['s'].configure(text="❌ Ошибка при скачивании", text_color="red")
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
 
             opts['progress_hooks'] = [hook]
 
             try:
-<<<<<<< HEAD
                 # 1. СКАЧИВАНИЕ ПОЛНОГО ВИДЕО
-                with yt_dlp.YoutubeDL(opts) as ydl:
-                    info = ydl.extract_info(task['url'], download=False)
-                    # Получаем имя, которое yt-dlp хотел бы дать
-                    target_filename = ydl.prepare_filename(info)
-                    ydl.download([task['url']])
+                download_success = False
+                last_error = None
+                
+                # Пытаемся скачать с основным форматом и fallback вариантами
+                formats_to_try = [original_format] if original_format else [opts.get('format', 'best')] if original_format else []
+                
+                # Добавляем fallback форматы если основной формат задан
+                if task.get('fmt'):
+                    # Определяем тип качества для fallback
+                    q_key = None
+                    fmt_to_check = task['fmt']
+                    
+                    # Проверяем точное совпадение
+                    for key, fmt_val in QUALITY_MAP.items():
+                        if fmt_val == fmt_to_check:
+                            q_key = key
+                            break
+                    
+                    # Если не нашли точное совпадение, проверяем по содержимому
+                    if not q_key:
+                        fmt_lower = fmt_to_check.lower()
+                        if '1080' in fmt_lower or 'height=1080' in fmt_lower:
+                            q_key = 'q_1080'
+                        elif '720' in fmt_lower or 'height=720' in fmt_lower:
+                            q_key = 'q_720'
+                        elif task['is_audio'] or 'audio' in fmt_lower:
+                            q_key = 'q_audio'
+                        else:
+                            q_key = 'q_best'
+                    
+                    if q_key and q_key in FALLBACK_FORMATS:
+                        formats_to_try.extend(FALLBACK_FORMATS[q_key])
+                    else:
+                        # Общие fallback форматы
+                        if task['is_audio']:
+                            formats_to_try.extend(['bestaudio/best', 'audio', 'best'])
+                        else:
+                            formats_to_try.extend(['bestvideo+bestaudio/best', 'best'])
+                else:
+                    # Если формат не задан, используем общие fallback
+                    if task['is_audio']:
+                        formats_to_try = ['bestaudio/best', 'audio', 'best']
+                    else:
+                        formats_to_try = ['bestvideo+bestaudio/best', 'best']
+                
+                # Пробуем скачать с каждым форматом по очереди
+                for fmt_attempt in formats_to_try:
+                    if self.abort_flag:
+                        raise Exception("ABORTED_BY_USER")
+                    
+                    try:
+                        opts['format'] = fmt_attempt
+                        with yt_dlp.YoutubeDL(opts) as ydl:
+                            info = ydl.extract_info(task['url'], download=False)
+                            # Получаем имя, которое yt-dlp хотел бы дать
+                            target_filename = ydl.prepare_filename(info)
+                            ydl.download([task['url']])
+                        download_success = True
+                        break  # Успешно скачали, выходим из цикла
+                    except Exception as fmt_error:
+                        error_str = str(fmt_error).lower()
+                        # Если это ошибка формата, пробуем следующий
+                        if "format is not available" in error_str or "requested format" in error_str:
+                            last_error = fmt_error
+                            logging.info(f"Format {fmt_attempt} not available, trying next...")
+                            continue
+                        else:
+                            # Другая ошибка - пробрасываем дальше
+                            raise
+                
+                if not download_success:
+                    raise last_error if last_error else Exception("Failed to download with any available format")
                 
                 # Ищем реальный файл (так как расширение могло измениться на .mkv/.webm)
                 final_file = None
@@ -1094,15 +1082,14 @@ class ModernYouTubeCutter(ctk.CTk):
 
                 # 2. ОБРАБОТКА (ОБРЕЗКА ИЛИ ПЕРЕИМЕНОВАНИЕ)
                 
-                # Если это ФРАГМЕНТ и это НЕ аудио-режим (для аудио yt-dlp сам режет неплохо, но тут мы говорим про видео)
-                if task['s'] is not None and not task['is_audio']:
+                # Если это ФРАГМЕНТ (видео или аудио)
+                if task['s'] is not None:
                     w['s'].configure(text=self.t('status_cutting'), text_color="orange")
                     self.lbl_status.configure(text=f"✂ [{current_task_num}/{total_tasks}] Обрезка FFmpeg...", text_color="orange")
                     
                     # Имя для финального файла (берем из метаданных видео)
                     # Но очищаем от недопустимых символов, если что
                     safe_title = "".join([c for c in info.get('title', f'video_{tid}') if c.isalpha() or c.isdigit() or c in ' .-_']).strip()
-                    final_cut_name = os.path.join(save_path, f"{safe_title}_cut_{task['s']}-{task['e']}.mp4")
                     
                     # Битрейт аудио
                     bitrate = task.get('bitrate', 'auto')
@@ -1110,18 +1097,42 @@ class ModernYouTubeCutter(ctk.CTk):
                     if bitrate == '128' or bitrate == 'fast': a_bitrate = '128k'
                     elif bitrate == '320': a_bitrate = '320k'
                     
-                    # КОМАНДА FFmpeg
-                    cmd = [
-                        self.ffmpeg_exe, '-y',
-                        '-i', final_file,         # Входной файл (полный)
-                        '-ss', str(task['s']),    # Время начала
-                        '-to', str(task['e']),    # Время конца
-                        '-c:v', 'libx264',        # Перекодируем видео (гарантия точности)
-                        '-preset', 'ultrafast',   # Максимально быстро
-                        '-c:a', 'aac',            # Перекодируем звук (гарантия работы)
-                        '-b:a', a_bitrate,
-                        final_cut_name            # Выходной файл
-                    ]
+                    # Добавляем суффикс качества для различения фрагментов с разным разрешением
+                    q_lbl = task.get('q_lbl', '')
+                    quality_suffix = self.get_quality_suffix(q_lbl, task.get('is_audio', False))
+                    
+                    if task['is_audio']:
+                        # Обрезка аудио фрагмента
+                        base_name = f"{safe_title}_cut_{task['s']}-{task['e']}{quality_suffix}"
+                        final_cut_name = self.get_unique_filename(save_path, base_name, ".mp3")
+                        
+                        # КОМАНДА FFmpeg для аудио
+                        cmd = [
+                            self.ffmpeg_exe, '-y',
+                            '-i', final_file,         # Входной файл (полный)
+                            '-ss', str(task['s']),    # Время начала
+                            '-to', str(task['e']),    # Время конца
+                            '-acodec', 'libmp3lame',  # Кодек MP3
+                            '-b:a', a_bitrate,        # Битрейт
+                            final_cut_name            # Выходной файл
+                        ]
+                    else:
+                        # Обрезка видео фрагмента
+                        base_name = f"{safe_title}_cut_{task['s']}-{task['e']}{quality_suffix}"
+                        final_cut_name = self.get_unique_filename(save_path, base_name, ".mp4")
+                        
+                        # КОМАНДА FFmpeg для видео
+                        cmd = [
+                            self.ffmpeg_exe, '-y',
+                            '-i', final_file,         # Входной файл (полный)
+                            '-ss', str(task['s']),    # Время начала
+                            '-to', str(task['e']),    # Время конца
+                            '-c:v', 'libx264',        # Перекодируем видео (гарантия точности)
+                            '-preset', 'ultrafast',   # Максимально быстро
+                            '-c:a', 'aac',            # Перекодируем звук (гарантия работы)
+                            '-b:a', a_bitrate,
+                            final_cut_name            # Выходной файл
+                        ]
                     
                     startupinfo = None
                     if os.name == 'nt':
@@ -1138,15 +1149,17 @@ class ModernYouTubeCutter(ctk.CTk):
                     # Если это ПОЛНОЕ видео, просто переименовываем красиво
                     safe_title = "".join([c for c in info.get('title', f'video_{tid}') if c.isalpha() or c.isdigit() or c in ' .-_']).strip()
                     ext = os.path.splitext(final_file)[1]
-                    final_name = os.path.join(save_path, f"{safe_title}{ext}")
                     
-                    if os.path.exists(final_name): os.remove(final_name)
+                    # Добавляем суффикс качества для различения файлов с разным разрешением
+                    q_lbl = task.get('q_lbl', '')
+                    quality_suffix = self.get_quality_suffix(q_lbl, task.get('is_audio', False))
+                    base_name = f"{safe_title}{quality_suffix}"
+                    
+                    # Генерируем уникальное имя файла
+                    final_name = self.get_unique_filename(save_path, base_name, ext)
+                    
                     os.rename(final_file, final_name)
 
-=======
-                with yt_dlp.YoutubeDL(opts) as ydl:
-                    ydl.download([task['url']])
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                 task['done'] = True
                 w['s'].configure(text="✔ Готово!", text_color="green")
                 w['p'].set(1)
@@ -1167,13 +1180,14 @@ class ModernYouTubeCutter(ctk.CTk):
                     logging.error(f"Timeout tid {tid}: {e}")
                 else:
                     err_msg = str(e)
-                    if "cookie" in err_msg.lower() or "locked" in err_msg.lower():
+                    error_lower = err_msg.lower()
+                    
+                    # Специальная обработка ошибок формата
+                    if "format is not available" in error_lower or "requested format" in error_lower:
+                        err_msg = f"Запрошенный формат недоступен. Попробованы все альтернативные форматы.\n\nОшибка: {str(e)}"
+                    
+                    if "cookie" in error_lower or "locked" in error_lower:
                         err_msg += "\n\n💡 ПОДСКАЗКА: Закройте браузер перед скачиванием!"
-<<<<<<< HEAD
-=======
-                    if "challenge" in err_msg.lower() or "js" in err_msg.lower():
-                        err_msg += "\n\n💡 ПОДСКАЗКА: Убедитесь, что deno.exe доступен и компоненты загружены!"
->>>>>>> 0f2b78d6d52779e963007067c998d2b3dabda55b
                     
                     task['error'] = err_msg
                     w['s'].configure(text="❌ Error", text_color="red")
