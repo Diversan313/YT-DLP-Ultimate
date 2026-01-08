@@ -2,7 +2,7 @@
 
 A comprehensive and powerful tool for downloading videos and audio from YouTube and other supported platforms. Built on top of yt-dlp, this project provides an enhanced user experience with advanced and modern flexible configuration options.
 
-<img width="1919" height="1023" alt="image" src="https://github.com/user-attachments/assets/87b8b0c8-eab5-484d-a4d2-c8000a4d8ef4" />
+<img width="1919" height="1014" alt="image" src="https://github.com/user-attachments/assets/40e2d10e-3bac-417e-9ec9-0917739a5776" />
 
 ## Overview
 
